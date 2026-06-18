@@ -3,8 +3,8 @@
 ## Setup
 
 ```bash
-python -m venv venv
-source venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -23,15 +23,16 @@ docker run --env-file .env bot
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
+| Variable             | Description               |
+| -------------------- | ------------------------- |
 | `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather |
-| `TELEGRAM_CHAT_ID` | Target group chat ID |
-| `PROXY_URL` | Proxy URL (optional) |
+| `TELEGRAM_CHAT_ID`   | Target group chat ID      |
+| `PROXY_URL`          | Proxy URL (optional)      |
 
 ## Data Storage
 
 Applications stored in `applications.db` (SQLite) with fields:
+
 - `user_id`, `username`, `brand_model`, `phone_username`, `created_at`
 
 ## Bot Flow
