@@ -16,9 +16,12 @@ logging.basicConfig(level=logging.INFO)
 
 BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
-PROXY_URL = os.getenv("PROXY_URL")
+PROXY_URL = os.environ.get("PROXY_URL")
 
-bot = Bot(token=BOT_TOKEN, proxy=PROXY_URL)
+if PROXY_URL:
+    bot = Bot(token=BOT_TOKEN, proxy=PROXY_URL)
+else:
+    bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 router = Router()
 
