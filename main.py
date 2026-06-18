@@ -6,6 +6,8 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, Router, types
+from aiogram.client.default import DefaultBotProperties
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import CommandStart
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
@@ -19,9 +21,10 @@ CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 PROXY_URL = os.environ.get("PROXY_URL")
 
 if PROXY_URL:
-    bot = Bot(token=BOT_TOKEN, proxy=PROXY_URL)
+    session = AiohttpSession(proxy=PROXY_URL)
+    bot = Bot(token=BOT_TOKEN, session=session, default=DefaultBotProperties(parse_mode="HTML"))
 else:
-    bot = Bot(token=BOT_TOKEN)
+    bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 dp = Dispatcher()
 router = Router()
 
@@ -82,8 +85,7 @@ async def process_name_phone(message: types.Message, state: FSMContext):
             f"🆔 <b>ID:</b> <code>{user_id}</code>\n\n"
             f"📱 <b>Марка/Модель:</b>\n{brand_model}\n\n"
             f"📞 <b>Имя и контакт:</b>\n{name_phone}\n\n"
-            f"⏰ {datetime.now().strftime('%d.%m.%Y %H:%M')}",
-            parse_mode="HTML"
+            f"⏰ {datetime.now().strftime('%d.%m.%Y %H:%M')}"
         )
 
     await message.answer("✅ Ваша заявка отправлена! Ожидайте ответа.")
